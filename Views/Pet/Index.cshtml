@@ -1,0 +1,35 @@
+﻿@model PetShopProject.Models.Animal
+@{
+    ViewData["Title"] = "Pet-Page";
+}
+<div class="container-fluid row align-items-center">
+
+    <div id="leftSide" class="col-lg-6">
+<h1 id="alignUntilLg">@Model.Name</h1>
+<img class="img-fluid" src="@Model.PictureSource"/>
+</div>
+
+<div id="rightSide" class="col-lg-6 text-center">
+<h2>AGE: @Model.Age</h2>
+<img  class="d-none d-lg-inline-block" src="~/Images/lolli_icon.png"/>
+<h2>DESCRIPTION</h2>
+<p>@Model.Description</p>
+</div>
+</div>
+
+
+<div>
+    <h1>Comments</h1>
+    @foreach(var c in @Model.Comments!)
+    {
+        <label for="commenter">ANNONIMUS:</label>
+        <p id="commenter">@c.CommentText</p>
+    }
+</div>
+<div>
+    <form asp-controller="Pet" asp-action="AddComment" method="post">
+        <input id="comment" name="comment" type="text" placeholder="Enter Your Comment"/>
+        <input id="animalId" name="animalId" value="@Model.AnimalId" type="hidden"/>
+        <button class="submit" type="submit">Add Comment</button>
+    </form>
+</div>

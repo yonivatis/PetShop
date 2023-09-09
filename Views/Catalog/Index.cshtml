@@ -1,0 +1,85 @@
+﻿@inject SignInManager<IdentityUser> signInManager;
+@model IEnumerable<PetShopProject.Models.Animal>
+@{
+    ViewData["Title"] = "Catalog";
+}
+
+<section>
+    
+    <form  asp-controller="Catalog" asp-action="Index" method="post">
+
+            <fieldset>
+               <p style="font-size:20px; margin-top:30px; margin-bottom:30px;"> Search By Category</p> 
+               <select id="Id" style="width:130px" name="Id">
+                   <option value="none" selected disabled hidden>
+                        @ViewBag.CurrentCategory.Name
+                   </option>
+                   <option value="0">
+                       All Animals
+                   </option>
+                @foreach(var c in @ViewBag.Categories)
+                {
+                    <option value="@c.CategoryId">@c.Name</option>
+                }
+
+                </select>
+                <input class="submit btn btn-primary" style="width:100px;margin-left:30px;" type="submit" value="Show Me" /> 
+
+            </fieldset>
+
+    </form>
+    <div>
+
+
+    @if(signInManager.IsSignedIn(User))
+                {
+                    <form method="get">
+                        <button class="btn btn-primary" asp-controller="Pet" asp-action="AddAnimal">Add Animal</button>
+                    </form> 
+                }
+                    
+               
+    </div>
+    <div>
+        <table>
+            <tr>
+                <th>Portrait</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Find More</th>
+                @if(signInManager.IsSignedIn(User))
+                {
+                    <th>Edit product</th>
+                    <th>Delete product</th>
+                }
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><img width="200" height="200" class="img-thumbnail" src=@item.PictureSource /></td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>
+                        <form method="post">
+                        <button asp-controller="Pet" asp-action="Index" asp-route-id="@item.AnimalId">Detail</button>
+                        </form>
+                    </td>
+                    @if(signInManager.IsSignedIn(User))
+                    {
+                       <td>
+                           <form method="post">
+                        <button asp-controller="Pet" asp-action="EditAnimal" asp-route-animalId="@item.AnimalId">Edit Animal</button>
+                        </form>
+                       </td> 
+                       <td>
+                        <form method="post">
+                        <button asp-controller="Pet" asp-action="RemoveAnimal" asp-route-animalId="@item.AnimalId">Delete Animal</button>
+                        </form>
+                       </td> 
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+</section>
+

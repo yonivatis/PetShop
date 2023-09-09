@@ -1,0 +1,48 @@
+﻿@model PetShopProject.Models.Animal;
+@{
+    ViewData["Title"] = "EditAnimal";
+}
+
+<h1>Edit Animal</h1>
+
+        <form method="post" asp-action="EditAnimalResult" asp-controller="Pet">
+            <input type="hidden" asp-for="AnimalId"/>
+            <div class="form-group">
+                <label asp-for="Name">Enter Name:</label>
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age"></label>
+                <input type="number" asp-for="Age" class="form-control"/>
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PictureSource"></label>
+                <input type="url" asp-for="PictureSource" class="form-control"/>
+                <span asp-validation-for="PictureSource" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId"></label>
+                <select asp-for="CategoryId">
+            @foreach(var c in ViewBag.Categories)
+            {
+                <option value="@c.CategoryId">@c.Name</option>
+            }
+        </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price"></label>
+                <input asp-for="Price" class="form-control"/>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            
+            <button type="submit" class="btn btn-primary">Update Animal</button>
+        </form>

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<PetShopProject.Models.Animal>
+@{
+    ViewBag.Title = "HomePage";
+}
+
+    <section class="container-fluid px-0">
+        <center class="row align-items-center">
+        <h1 class="h1">The two most highly rated pets today are</h1>
+        <table class="table table-striped">
+            <tr>
+                <th>Portrait</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Number of comments</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><img width="200" height="200" class="img-thumbnail" src=@item.PictureSource /></td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Comments!.Count</td>
+                </tr>
+            }
+        </table>
+    </center>
+    </section>
+
+
+
